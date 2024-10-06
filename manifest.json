@@ -7,7 +7,7 @@
   "content_scripts": [
     {
       "matches": ["*://*.hotstar.com/*"],
-      "js": ["test.js"]
+      "js": ["testing.js"]
     }
   ]
 }
