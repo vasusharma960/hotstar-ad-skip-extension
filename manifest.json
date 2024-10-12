@@ -3,11 +3,14 @@
   "name": "Disney+ Hotstar Ad Skip",
   "version": "1.0",
   "description": "Triggers whenever ads come while watching not a live content on hotstar and skips it.",
-  "permissions": ["activeTab"],
+  "permissions": ["webNavigation", "activeTab", "scripting"],
+  "background": {
+    "service_worker": "backgroundURLCheck.js"
+  },
   "content_scripts": [
     {
-      "matches": ["*://*.hotstar.com/*"],
-      "js": ["test.js"]
+      "matches": ["*://*.hotstar.com/*/watch*"],
+      "js": ["detectAdsVideoObserver.js"]
     }
   ]
 }
