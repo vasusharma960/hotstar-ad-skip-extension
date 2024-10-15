@@ -28,7 +28,7 @@ const createNewObserver = () => {
 };
 
 const startObserving = () => {
-  observer.observe(document.body, { childList: true, subTree: true });
+  observer.observe(document.body, { childList: true, subtree: true });
 };
 
 const disconnectAndStopObserving = () => {};
