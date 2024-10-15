@@ -8,12 +8,15 @@ const mutationsCallback = (mutations) => {
       const addedNodes = Array.from(mutation.addedNodes);
 
       addedNodes.forEach((node) => {
-        if (
-          node.nodeType === Node.ELEMENT_NODE &&
-          node.tagName.toLowerCase() === "video"
-        ) {
-          // click button logic
-          alert("ad video found");
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          if (node.tagName.toLowerCase() === "video") {
+            // click button logic
+            const noOfVideoTags = document.getElementsByTagName("video");
+
+            if (noOfVideoTags.length > 1) {
+              alert("ad video found");  
+            }
+          }
         }
       });
     }
