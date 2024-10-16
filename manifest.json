@@ -7,11 +7,5 @@
   "background": {
     "service_worker": "backgroundURLCheck.js"
   },
-  "host_permissions": ["https://*.hotstar.com/*/watch*"],
-  "content_scripts": [
-    {
-      "matches": ["*://*.hotstar.com/*/watch*"],
-      "js": ["detectAdsVideoObserver.js"]
-    }
-  ]
+  "host_permissions": ["https://*.hotstar.com/*/watch*"]
 }
