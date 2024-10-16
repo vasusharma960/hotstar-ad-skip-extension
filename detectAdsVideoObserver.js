@@ -14,7 +14,7 @@ const mutationsCallback = (mutations) => {
             const noOfVideoTags = document.getElementsByTagName("video");
 
             if (noOfVideoTags.length > 1) {
-              alert("ad video found");  
+              alert("ad video found");
             }
           }
         }
@@ -31,7 +31,12 @@ const startObserving = () => {
   observer.observe(document.body, { childList: true, subtree: true });
 };
 
-const disconnectAndStopObserving = () => {};
+const disconnectAndStopObserving = () => {
+  if (observer) {
+    observer.disconnect();
+    observer = null;
+  }
+};
 
 const checkAndStartObserving = () => {
   if (observer) {
@@ -44,4 +49,6 @@ const checkAndStartObserving = () => {
 
 checkAndStartObserving();
 
-// export default observer;
+window.addEventListener("unload", () => {
+  disconnectAndStopObserving();
+});
