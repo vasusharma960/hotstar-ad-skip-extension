@@ -14,7 +14,6 @@ const mutationsCallback = (mutations) => {
             const noOfVideoTags = document.getElementsByTagName("video");
 
             if (noOfVideoTags.length > 1) {
-              alert("ad video found");
               clickSkipAdsButton();
             }
           }
