@@ -25,3 +25,28 @@ chrome.webNavigation.onHistoryStateUpdated.addListener(
     ],
   }
 );
+
+chrome.webNavigation.onCompleted.addListener(
+  (details) => {
+    console.log(details);
+    if (details.url.includes("/payment/checkout")) {
+      console.log("injecting cancelAndGoBackScript");
+
+      chrome.scripting
+        .executeScript({
+          target: { tabId: details.tabId },
+          files: ["cancelAndGoBackScript.js"],
+        })
+        .then(() => console.log("cancel and skip ad script injection success"))
+        .catch((e) => console.error(e));
+    }
+  },
+  {
+    url: [
+      {
+        hostContains: "hotstar.com",
+        pathContains: "/payment/checkout",
+      },
+    ],
+  }
+);
