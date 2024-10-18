@@ -5,7 +5,7 @@
   "description": "Triggers whenever ads come while watching not a live content on hotstar and skips it.",
   "permissions": ["webNavigation", "scripting", "activeTab"],
   "background": {
-    "service_worker": "backgroundURLCheck.js"
+    "service_worker": "service-worker.js"
   },
   "host_permissions": ["https://*.hotstar.com/*/watch*"]
 }
