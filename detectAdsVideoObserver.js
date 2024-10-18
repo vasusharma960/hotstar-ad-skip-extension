@@ -15,6 +15,7 @@ const mutationsCallback = (mutations) => {
 
             if (noOfVideoTags.length > 1) {
               alert("ad video found");
+              clickSkipAdsButton();
             }
           }
         }
@@ -44,6 +45,31 @@ const checkAndStartObserving = () => {
   } else {
     createNewObserver();
     startObserving();
+  }
+};
+
+const findSkipBtn = (btn) => {
+  if (!btn) {
+    return false;
+  }
+
+  if (btn.nodeType === 3 && btn.textContent === "Go Ads free") {
+    return true;
+  }
+
+  return findSkipBtn(btn.firstChild);
+};
+
+const clickSkipAdsButton = () => {
+  const btns = document.getElementsByTagName("button");
+  const length = btns.length;
+
+  for (let i = 0; i < length; i++) {
+    const currentBtn = btns[i];
+
+    if (findSkipBtn(currentBtn)) {
+      currentBtn.click();
+    }
   }
 };
 
