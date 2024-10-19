@@ -67,11 +67,14 @@
     const observer = createNewObserver();
     startObserving(observer);
 
-    window.addEventListener("popstate", () => {
-      if (observer && !window.location.href.includes("/watch")) {
-        disconnectAndStopObserving(observer);
-      }
-    });
+    if (!window.isPopstateEventListenerRegistered) {
+      window.addEventListener("popstate", () => {
+        if (observer && !window.location.href.includes("/watch")) {
+          disconnectAndStopObserving(observer);
+        }
+      });
+      window.isPopstateEventListenerRegistered = true;
+    }
   };
 
   checkAndStartObserving();
