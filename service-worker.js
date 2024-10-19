@@ -26,7 +26,7 @@ chrome.webNavigation.onHistoryStateUpdated.addListener(
   }
 );
 
-chrome.webNavigation.onCompleted.addListener(
+chrome.webNavigation.onHistoryStateUpdated.addListener(
   (details) => {
     console.log(details);
     if (details.url.includes("/payment/checkout")) {

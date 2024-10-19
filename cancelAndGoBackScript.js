@@ -1,18 +1,25 @@
 const findBackIcon = () => {
-  const backIcon = document.getElementsByClassName("icon-arrow-back");
-  console.log("backIcon ====> ", backIcon);
+  const startTime = Date.now();
 
-  if (backIcon && backIcon.length > 0) {
-    setTimeout(() => {
-      backIcon[0].click();
-      console.log("backIcon click success====> ");
+  const findBackIconInterval = setInterval(() => {
+    const backIconList = document.getElementsByClassName("icon-arrow-back");
 
+    if (backIconList && backIconList.length > 0) {
+      clearInterval(findBackIconInterval);
       setTimeout(() => {
-        console.log("backIcon find cancel btn====> ");
-        findAndClickCancelButton();
+        backIconList[0].click();
+        console.log("backIcon click success====> ");
+
+        setTimeout(() => {
+          console.log("backIcon find cancel btn====> ");
+          findAndClickCancelButton();
+        }, 1000);
       }, 1000);
-    }, 1000);
-  }
+    } else if (Date.now() > startTime) {
+      clearInterval(findBackIconInterval);
+      console.error("Back Icon not found.");
+    }
+  }, 500);
 };
 
 const findAndClickCancelButton = () => {
