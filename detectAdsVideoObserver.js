@@ -1,79 +1,78 @@
-alert("Observer script loaded");
+(function () {
+  alert("Observer script loaded");
 
-let observer;
+  const mutationsCallback = (mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.type === "childList") {
+        const addedNodes = Array.from(mutation.addedNodes);
+        addedNodes.forEach((node) => {
+          if (node.nodeType === Node.ELEMENT_NODE) {
+            if (node.tagName.toLowerCase() === "video") {
+              const noOfVideoTags = document.getElementsByTagName("video");
 
-const mutationsCallback = (mutations) => {
-  for (const mutation of mutations) {
-    if (mutation.type === "childList") {
-      const addedNodes = Array.from(mutation.addedNodes);
-
-      addedNodes.forEach((node) => {
-        if (node.nodeType === Node.ELEMENT_NODE) {
-          if (node.tagName.toLowerCase() === "video") {
-            // click button logic
-            const noOfVideoTags = document.getElementsByTagName("video");
-
-            if (noOfVideoTags.length > 1) {
-              clickSkipAdsButton();
+              if (noOfVideoTags.length > 1) {
+                clickSkipAdsButton();
+              }
             }
           }
-        }
-      });
+        });
+      }
     }
-  }
-};
+  };
 
-const createNewObserver = () => {
-  observer = new MutationObserver(mutationsCallback);
-};
+  const createNewObserver = () => {
+    console.log("observer created");
+    return new MutationObserver(mutationsCallback);
+  };
 
-const startObserving = () => {
-  observer.observe(document.body, { childList: true, subtree: true });
-};
+  const startObserving = (observer) => {
+    console.log("observer observing");
+    observer.observe(document.body, { childList: true, subtree: true });
+  };
 
-const disconnectAndStopObserving = () => {
-  if (observer) {
-    observer.disconnect();
-    observer = null;
-  }
-};
-
-const checkAndStartObserving = () => {
-  if (observer) {
-    console.log("Already Observing of ad video tags");
-  } else {
-    createNewObserver();
-    startObserving();
-  }
-};
-
-const findSkipBtn = (btn) => {
-  if (!btn) {
-    return false;
-  }
-
-  if (btn.nodeType === 3 && btn.textContent === "Go Ads free") {
-    return true;
-  }
-
-  return findSkipBtn(btn.firstChild);
-};
-
-const clickSkipAdsButton = () => {
-  const btns = document.getElementsByTagName("button");
-  const length = btns.length;
-
-  for (let i = 0; i < length; i++) {
-    const currentBtn = btns[i];
-
-    if (findSkipBtn(currentBtn)) {
-      currentBtn.click();
+  const disconnectAndStopObserving = (observer) => {
+    if (observer) {
+      observer.disconnect();
+      observer = null;
+      console.log("observer present. disconected", observer);
     }
-  }
-};
+  };
 
-checkAndStartObserving();
+  const findSkipBtn = (btn) => {
+    if (!btn) {
+      return false;
+    }
 
-window.addEventListener("unload", () => {
-  disconnectAndStopObserving();
-});
+    if (btn.nodeType === 3 && btn.textContent === "Go Ads free") {
+      return true;
+    }
+
+    return findSkipBtn(btn.firstChild);
+  };
+
+  const clickSkipAdsButton = () => {
+    const btns = document.getElementsByTagName("button");
+    const length = btns.length;
+
+    for (let i = 0; i < length; i++) {
+      const currentBtn = btns[i];
+
+      if (findSkipBtn(currentBtn)) {
+        currentBtn.click();
+      }
+    }
+  };
+
+  const checkAndStartObserving = () => {
+    const observer = createNewObserver();
+    startObserving(observer);
+
+    window.addEventListener("popstate", () => {
+      if (observer && !window.location.href.includes("/watch")) {
+        disconnectAndStopObserving(observer);
+      }
+    });
+  };
+
+  checkAndStartObserving();
+})();
