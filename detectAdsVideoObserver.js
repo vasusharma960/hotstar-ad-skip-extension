@@ -1,6 +1,4 @@
 (function () {
-  alert("Observer script loaded");
-
   const mutationsCallback = (mutations) => {
     for (const mutation of mutations) {
       if (mutation.type === "childList") {
